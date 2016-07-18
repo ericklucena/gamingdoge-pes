@@ -29,6 +29,7 @@ namespace Assets.Scripts
         private bool _jump;
         private bool _kick;
         private bool _build;
+        public bool _up;
 
         // States
         private bool _facingRight = true;
@@ -83,6 +84,11 @@ namespace Assets.Scripts
             if (Input.GetButtonDown(_control.Build))
                 _build = true;
 
+            if (Input.GetAxis(_control.Vertical) > 0)
+                _up = true;
+            else
+                _up = false;
+
         }
 
         private void ManageHorizontalMovements()
@@ -106,9 +112,18 @@ namespace Assets.Scripts
         private void ManageKickMovement()
         {
             if (_kick)
-                LegControl.Kick();
+            {
+                if (_up)
+                {
+                    LegControl.KickUp();
+                }
+                else
+                {
+                    LegControl.Kick();
+                }
+            }
 
-            _kick = false;
+            _kick = _up = false;
         }
 
         private void ManageBuildMovement()

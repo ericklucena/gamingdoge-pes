@@ -9,10 +9,11 @@ namespace Assets.Scripts
         private GameObject _ballOnReach;
 
         private const float KICK_FORCE = 100f;
+        private const float KICK_UP_FORCE = 70f;
 
         // Commands
-
         private bool _kick;
+        private bool _kickUp;
 
         // Use this for initialization
         void Start() {
@@ -39,17 +40,21 @@ namespace Assets.Scripts
             _kick = true;
         }
 
+        public void KickUp()
+        {
+            _kickUp = true;
+        }
+
         private void ManageKick()
         {
-            if (_kick)
+            if (_kick || _kickUp)
             {
-                _kick = false;
                 if (_ballOnReach != null)
                 {
                     Rigidbody2D rb2 = Getter.GetRigibody2D(_ballOnReach);
-                    rb2.AddForce(new Vector2(KICK_FORCE*_player.Direction, 0f));
+                    rb2.AddForce(new Vector2(_kick?KICK_FORCE*_player.Direction:0f, _kickUp?KICK_UP_FORCE:0f));
                 }
-
+                _kick = _kickUp = false;
             }
         }
 
