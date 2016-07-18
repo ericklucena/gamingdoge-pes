@@ -12,8 +12,10 @@ namespace Assets.Scripts
 
         internal LegControl LegControl { get; set; }
 
-        // Vectors
+        // Properties
+        public float Direction { get { return _facingRight ? 1f : -1f; } }
 
+        // Vectors
         private Vector3 BUILD_POSITION = new Vector3(0.5f, -0.5f);
 
         // Forces
@@ -27,6 +29,9 @@ namespace Assets.Scripts
         private bool _jump;
         private bool _kick;
         private bool _build;
+
+        // States
+        private bool _facingRight = true;
 
         // Prefabs
         public GameObject Ball;
@@ -54,13 +59,20 @@ namespace Assets.Scripts
 
         private void ManageControlInputs()
         {
-
             float h = Input.GetAxis(_control.Horizontal);
 
             if (h > 0)
+            {
                 _foward = true;
+                if (!_facingRight)
+                    Flip();
+            }
             else if (h < 0)
+            {
                 _backward = true;
+                if (_facingRight)
+                    Flip();
+            }
 
             if (Input.GetButtonDown(_control.Fire))
                 _kick = true;
@@ -109,6 +121,17 @@ namespace Assets.Scripts
             }
 
             _build = false;
+        }
+
+        void Flip()
+        {
+            // Switch the way the player is labelled as facing.
+            _facingRight = !_facingRight;
+
+            // Multiply the player's x local scale by -1.
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
         }
     }
 }

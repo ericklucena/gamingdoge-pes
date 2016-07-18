@@ -47,7 +47,7 @@ namespace Assets.Scripts
                 if (_ballOnReach != null)
                 {
                     Rigidbody2D rb2 = Getter.GetRigibody2D(_ballOnReach);
-                    rb2.AddForce(new Vector2(0f, KICK_FORCE));
+                    rb2.AddForce(new Vector2(KICK_FORCE*_player.Direction, 0f));
                 }
 
             }
