@@ -17,9 +17,11 @@ namespace Assets.Scripts
         public float Direction { get { return _facingRight ? 1f : -1f; } }
         [SerializeField]
         public bool Grounded { get { return FeetControl.Grounded; } }
+        private Vector3 BuildPosition { get { return _facingRight ? BUILD_POSITION_RIGHT : BUILD_POSITION_LEFT; } }
 
         // Vectors
-        private Vector3 BUILD_POSITION = new Vector3(0.5f, -0.5f);
+        private Vector3 BUILD_POSITION_RIGHT = new Vector3(0.5f, -0.5f);
+        private Vector3 BUILD_POSITION_LEFT = new Vector3(-0.5f, -0.5f);
 
         // Forces
         private const float WALK_FORCE = 10f;
@@ -136,7 +138,7 @@ namespace Assets.Scripts
         {
             if (_build)
             {
-                GameObject ballInstance = Instantiate(Ball, transform.position + BUILD_POSITION, Quaternion.Euler(Vector3.zero)) as GameObject;
+                GameObject ballInstance = Instantiate(Ball, transform.position + BuildPosition, Quaternion.Euler(Vector3.zero)) as GameObject;
                 Rigidbody2D rb2 = Getter.GetRigibody2D(ballInstance);
                 rb2.velocity = new Vector2(0, BUILD_FORCE);
             }
