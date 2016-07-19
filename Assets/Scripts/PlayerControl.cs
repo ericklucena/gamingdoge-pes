@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 namespace Assets.Scripts
 {
@@ -9,7 +10,7 @@ namespace Assets.Scripts
         private int _playerNumber;
         private ControlMapper _control;
 
-
+        // Elements
         internal LegControl LegControl { get; set; }
         internal FeetControl FeetControl { get; set; }
 
@@ -28,11 +29,16 @@ namespace Assets.Scripts
         private float JUMP_FORCE = 250f;
         private float BUILD_FORCE = 2f;
 
+        // Limits
+        private float HORIZONTAL_WALK_VELOCITY = 2.5f;
+        private float HORIZONTAL_DASH_VELOCITY = 5f;
+
         // Commands
         private bool _foward;
         private bool _backward;
         private bool _jump;
         private bool _kick;
+        private bool _dash;
         private bool _build;
         public bool _up;
 
@@ -83,6 +89,11 @@ namespace Assets.Scripts
             if (Input.GetButtonDown(_control.Fire))
                 _kick = true;
 
+            if (Input.GetButtonDown(_control.Dash))
+                _dash = true;
+            if (Input.GetButtonUp(_control.Dash))
+                _dash = false;
+
             if (Input.GetButtonDown(_control.Jump))
                 _jump = true;
 
@@ -101,10 +112,15 @@ namespace Assets.Scripts
 
         private void ManageHorizontalMovements()
         {
+            Rigidbody2D rb2 = GetComponent<Rigidbody2D>();
+            float velocity = _dash ? HORIZONTAL_DASH_VELOCITY : HORIZONTAL_WALK_VELOCITY;
+
             if (_foward)
-                GetComponent<Rigidbody2D>().AddForce(Vector2.right * WALK_FORCE);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(velocity, GetComponent<Rigidbody2D>().velocity.y);
             else if (_backward)
-                GetComponent<Rigidbody2D>().AddForce(Vector2.left * WALK_FORCE);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(-1 * velocity, GetComponent<Rigidbody2D>().velocity.y);
+            else if (Grounded)
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
 
             _foward = _backward = false;
         }
