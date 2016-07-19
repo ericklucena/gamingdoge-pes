@@ -89,6 +89,9 @@ namespace Assets.Scripts
             else
                 _up = false;
 
+            if (Input.GetButtonDown(_control.Start))
+                GameControl.Instance.ToogleRunning();
+
         }
 
         private void ManageHorizontalMovements()
