@@ -11,9 +11,12 @@ namespace Assets.Scripts
 
 
         internal LegControl LegControl { get; set; }
+        internal FeetControl FeetControl { get; set; }
 
         // Properties
         public float Direction { get { return _facingRight ? 1f : -1f; } }
+        [SerializeField]
+        public bool Grounded { get { return FeetControl.Grounded; } }
 
         // Vectors
         private Vector3 BUILD_POSITION = new Vector3(0.5f, -0.5f);
@@ -106,7 +109,7 @@ namespace Assets.Scripts
 
         private void ManageVerticalMovements()
         {
-            if (_jump)
+            if (_jump && Grounded)
                 GetComponent<Rigidbody2D>().AddForce(Vector2.up * JUMP_FORCE);
 
             _jump = false;
