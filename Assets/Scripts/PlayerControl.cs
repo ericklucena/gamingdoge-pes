@@ -175,7 +175,7 @@ namespace Assets.Scripts
             _destroy = false;
         }
 
-        void Flip()
+        public void Flip()
         {
             // Switch the way the player is labelled as facing.
             _facingRight = !_facingRight;

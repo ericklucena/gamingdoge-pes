@@ -14,16 +14,16 @@ namespace Assets.Scripts
         private float distance;
         [SerializeField]
         private float yPos = 0f;
-        [SerializeField]
-        private float deslocalmento;
 
         void Awake()
         {
-            // Setting up the reference.
-            GameObject[] playersGameObjects = GameObject.FindGameObjectsWithTag("Player");
-            // Setting up the reference.
-            players = Array.ConvertAll<GameObject, Transform>(playersGameObjects, x => x.transform);
+            
+        }
 
+        public void StartCamera()
+        {
+            GameObject[] playersGameObjects = playersGameObjects = GameObject.FindGameObjectsWithTag("Player");
+            players = Array.ConvertAll<GameObject, Transform>(playersGameObjects, x => x.transform);
         }
 
         void Update()

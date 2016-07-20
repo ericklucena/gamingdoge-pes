@@ -14,9 +14,11 @@ namespace Assets.Scripts
 
         void Awake()
         {
+            Instantiate(Player, BUILD_POSITION_LEFT, Quaternion.Euler(Vector3.zero));
             GameObject Player2 = Instantiate(Player, BUILD_POSITION_RIGHT, Quaternion.Euler(Vector3.zero)) as GameObject;
-            Player2.GetComponent<PlayerControl>();
-            
+            Player2.GetComponent<PlayerControl>().Flip();
+
+            transform.GetComponent<CameraFollow>().StartCamera();
         }
 
         void Update()
