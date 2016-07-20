@@ -70,6 +70,7 @@ namespace Assets.Scripts
                     //normalize kick force and distribute between X and Y
                     float deltaX = Mathf.Abs(_player.KickPosition.x - _ballOnReach.transform.position.x);
                     float deltaY = Mathf.Abs(_player.KickPosition.y - _ballOnReach.transform.position.y);
+                    rb2.velocity = new Vector2(rb2.velocity.x, 0f);
                     rb2.AddForce(new Vector2(_KICK_FORCE * _player.Direction * (deltaX * 2 / (deltaX + deltaY)), _KICK_FORCE * (deltaY * 2 / (deltaX + deltaY))));
                 }
 
