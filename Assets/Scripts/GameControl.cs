@@ -11,7 +11,12 @@ namespace Assets.Scripts
         private static GameControl _instance;
 
         private int _players;
-        
+        private int _player1Score;
+        private int _player2Score;
+
+        public int Player1Score { get { return _player1Score; } }
+        public int Player2Score { get { return _player2Score; } }
+
         // States
         public bool Running { get; private set; }
 
@@ -45,6 +50,18 @@ namespace Assets.Scripts
                 Pause();
             else
                 Resume();
+        }
+
+        public void GoalScored(int player)
+        {
+            if (player == 1)
+            {
+                _player1Score++;
+            }
+            else if (player == 2)
+            {
+                _player2Score++;
+            }
         }
 
         public static GameControl Instance
