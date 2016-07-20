@@ -18,20 +18,20 @@ namespace Assets.Scripts
         public float Direction { get { return _facingRight ? 1f : -1f; } }
         public bool Grounded { get { return FeetControl.Grounded; } }
         public bool OnSpawnArea { get; set; }
-        public Vector3 KickPosition { get { return transform.position + _KICK_POSITION; } }
+        public Vector3 KickPosition { get { return transform.position + (_facingRight?_KICK_POSITION_RIGHT:_KICK_POSITION_LEFT); } }
 
         // Private Properties
-        private Vector3 BuildPosition { get { return _facingRight ? _BUILD_POSITION_RIGHT : _BUILD_POSITION_LEFT; } }
-
+        private Vector3 _BuildPosition { get { return _facingRight ? _BUILD_POSITION_RIGHT : _BUILD_POSITION_LEFT; } }
 
         // Vectors
         private Vector3 _BUILD_POSITION_RIGHT = new Vector3(0.35f, -0.5f);
         private Vector3 _BUILD_POSITION_LEFT = new Vector3(-0.35f, -0.5f);
-        private Vector3 _KICK_POSITION = new Vector3(0.24f, -0.19f);
+        private Vector3 _KICK_POSITION_RIGHT = new Vector3(0.24f, -0.19f);
+        private Vector3 _KICK_POSITION_LEFT = new Vector3(-0.24f, -0.19f);
 
         // Forces
         private const float _WALK_FORCE = 10f;
-        private float _JUMP_FORCE = 250f;
+        private float _JUMP_FORCE = 220f;
         private float _BUILD_FORCE = 2f;
 
         // Limits
@@ -50,6 +50,7 @@ namespace Assets.Scripts
 
         // Internal States
         private bool _facingRight = true;
+        private bool _jumping = false;
 
         // Prefabs
         public GameObject Ball;
@@ -102,6 +103,8 @@ namespace Assets.Scripts
 
             if (Input.GetButtonDown(_control.Jump))
                 _jump = true;
+            if (Input.GetButtonUp(_control.Jump))
+                _jump = false;
 
             if (Input.GetButtonDown(_control.Build))
                 _build = true;
@@ -136,10 +139,20 @@ namespace Assets.Scripts
 
         private void ManageVerticalMovements()
         {
-            if (_jump && Grounded)
-                GetComponent<Rigidbody2D>().AddForce(Vector2.up * _JUMP_FORCE);
+            Rigidbody2D rb2 = GetComponent<Rigidbody2D>();
 
-            _jump = false;
+            if (_jump && Grounded && !_jumping)
+            {
+                rb2.AddForce(Vector2.up * _JUMP_FORCE);
+                _jumping = true;
+            }
+
+            if (!_jump && _jumping)
+            {
+                rb2.velocity = new Vector2(rb2.velocity.x, rb2.velocity.y<0?rb2.velocity.y:0.5f);
+                _jumping = false;
+            }
+
         }
 
         private void ManageKickMovement()
@@ -163,7 +176,7 @@ namespace Assets.Scripts
         {
             if (_build && OnSpawnArea)
             {
-                GameObject ballInstance = Instantiate(Ball, transform.position + BuildPosition, Quaternion.Euler(Vector3.zero)) as GameObject;
+                GameObject ballInstance = Instantiate(Ball, transform.position + _BuildPosition, Quaternion.Euler(Vector3.zero)) as GameObject;
                 Rigidbody2D rb2 = Getter.GetRigibody2D(ballInstance);
                 rb2.velocity = new Vector2(0, _BUILD_FORCE);
             }
