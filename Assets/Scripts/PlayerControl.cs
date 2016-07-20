@@ -14,11 +14,14 @@ namespace Assets.Scripts
         internal LegControl LegControl { get; set; }
         internal FeetControl FeetControl { get; set; }
 
-        // Properties
+        // Public Properties
         public float Direction { get { return _facingRight ? 1f : -1f; } }
-        [SerializeField]
         public bool Grounded { get { return FeetControl.Grounded; } }
+        public bool OnSpawnArea { get; set; }
+        
+        // Private Properties
         private Vector3 BuildPosition { get { return _facingRight ? BUILD_POSITION_RIGHT : BUILD_POSITION_LEFT; } }
+
 
         // Vectors
         private Vector3 BUILD_POSITION_RIGHT = new Vector3(0.35f, -0.5f);
@@ -43,7 +46,7 @@ namespace Assets.Scripts
         public bool _up;
         public bool _destroy;
 
-        // States
+        // Internal States
         private bool _facingRight = true;
 
         // Prefabs
@@ -156,7 +159,7 @@ namespace Assets.Scripts
 
         private void ManageBuildMovement()
         {
-            if (_build)
+            if (_build && OnSpawnArea)
             {
                 GameObject ballInstance = Instantiate(Ball, transform.position + BuildPosition, Quaternion.Euler(Vector3.zero)) as GameObject;
                 Rigidbody2D rb2 = Getter.GetRigibody2D(ballInstance);
