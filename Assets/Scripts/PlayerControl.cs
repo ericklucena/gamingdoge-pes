@@ -18,23 +18,25 @@ namespace Assets.Scripts
         public float Direction { get { return _facingRight ? 1f : -1f; } }
         public bool Grounded { get { return FeetControl.Grounded; } }
         public bool OnSpawnArea { get; set; }
-        
+        public Vector3 KickPosition { get { return transform.position + _KICK_POSITION; } }
+
         // Private Properties
-        private Vector3 BuildPosition { get { return _facingRight ? BUILD_POSITION_RIGHT : BUILD_POSITION_LEFT; } }
+        private Vector3 BuildPosition { get { return _facingRight ? _BUILD_POSITION_RIGHT : _BUILD_POSITION_LEFT; } }
 
 
         // Vectors
-        private Vector3 BUILD_POSITION_RIGHT = new Vector3(0.35f, -0.5f);
-        private Vector3 BUILD_POSITION_LEFT = new Vector3(-0.35f, -0.5f);
+        private Vector3 _BUILD_POSITION_RIGHT = new Vector3(0.35f, -0.5f);
+        private Vector3 _BUILD_POSITION_LEFT = new Vector3(-0.35f, -0.5f);
+        private Vector3 _KICK_POSITION = new Vector3(0.24f, -0.19f);
 
         // Forces
-        private const float WALK_FORCE = 10f;
-        private float JUMP_FORCE = 250f;
-        private float BUILD_FORCE = 2f;
+        private const float _WALK_FORCE = 10f;
+        private float _JUMP_FORCE = 250f;
+        private float _BUILD_FORCE = 2f;
 
         // Limits
-        private float HORIZONTAL_WALK_VELOCITY = 2.5f;
-        private float HORIZONTAL_DASH_VELOCITY = 5f;
+        private float _HORIZONTAL_WALK_VELOCITY = 2.5f;
+        private float _HORIZONTAL_DASH_VELOCITY = 5f;
 
         // Commands
         private bool _foward;
@@ -120,7 +122,7 @@ namespace Assets.Scripts
         private void ManageHorizontalMovements()
         {
             Rigidbody2D rb2 = GetComponent<Rigidbody2D>();
-            float velocity = _dash ? HORIZONTAL_DASH_VELOCITY : HORIZONTAL_WALK_VELOCITY;
+            float velocity = _dash ? _HORIZONTAL_DASH_VELOCITY : _HORIZONTAL_WALK_VELOCITY;
 
             if (_foward)
                 GetComponent<Rigidbody2D>().velocity = new Vector2(velocity, GetComponent<Rigidbody2D>().velocity.y);
@@ -135,7 +137,7 @@ namespace Assets.Scripts
         private void ManageVerticalMovements()
         {
             if (_jump && Grounded)
-                GetComponent<Rigidbody2D>().AddForce(Vector2.up * JUMP_FORCE);
+                GetComponent<Rigidbody2D>().AddForce(Vector2.up * _JUMP_FORCE);
 
             _jump = false;
         }
@@ -163,7 +165,7 @@ namespace Assets.Scripts
             {
                 GameObject ballInstance = Instantiate(Ball, transform.position + BuildPosition, Quaternion.Euler(Vector3.zero)) as GameObject;
                 Rigidbody2D rb2 = Getter.GetRigibody2D(ballInstance);
-                rb2.velocity = new Vector2(0, BUILD_FORCE);
+                rb2.velocity = new Vector2(0, _BUILD_FORCE);
             }
 
             if (_destroy)

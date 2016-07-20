@@ -2,14 +2,15 @@
 using System.Collections;
 namespace Assets.Scripts
 {
-    public class LegControl : MonoBehaviour {
+    public class LegControl : MonoBehaviour
+    {
 
         private PlayerControl _player;
 
         private GameObject _ballOnReach;
 
-        private const float KICK_FORCE = 100f;
-        private const float KICK_UP_FORCE = 70f;
+        private const float _KICK_FORCE = 80f;
+        private const float _KICK_UP_FORCE = 70f;
 
         // Commands
         private bool _kick;
@@ -17,13 +18,15 @@ namespace Assets.Scripts
         private bool _destroy;
 
         // Use this for initialization
-        void Start() {
+        void Start()
+        {
             _player = transform.parent.GetComponent<PlayerControl>();
             _player.LegControl = this;
         }
 
         // Update is called once per frame
-        void Update() {
+        void Update()
+        {
 
         }
 
@@ -54,15 +57,24 @@ namespace Assets.Scripts
 
         private void ManageKick()
         {
-            if (_kick || _kickUp)
+            if (_ballOnReach != null)
             {
-                if (_ballOnReach != null)
+                Rigidbody2D rb2 = Getter.GetRigibody2D(_ballOnReach);
+                if (_kickUp)
                 {
-                    Rigidbody2D rb2 = Getter.GetRigibody2D(_ballOnReach);
-                    rb2.AddForce(new Vector2(_kick?KICK_FORCE*_player.Direction:0f, _kickUp?KICK_UP_FORCE:0f));
+
+                    rb2.AddForce(new Vector2(0f, _KICK_UP_FORCE));
                 }
-                _kick = _kickUp = false;
+                else if (_kick)
+                {
+                    //normalize kick force and distribute between X and Y
+                    float deltaX = Mathf.Abs(_player.KickPosition.x - _ballOnReach.transform.position.x);
+                    float deltaY = Mathf.Abs(_player.KickPosition.y - _ballOnReach.transform.position.y);
+                    rb2.AddForce(new Vector2(_KICK_FORCE * _player.Direction * (deltaX * 2 / (deltaX + deltaY)), _KICK_FORCE * (deltaY * 2 / (deltaX + deltaY))));
+                }
+
             }
+            _kick = _kickUp = false;
         }
 
         private void ManageDestroy()
