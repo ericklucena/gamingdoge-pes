@@ -14,6 +14,7 @@ namespace Assets.Scripts
         // Commands
         private bool _kick;
         private bool _kickUp;
+        private bool _destroy;
 
         // Use this for initialization
         void Start() {
@@ -30,6 +31,7 @@ namespace Assets.Scripts
         void FixedUpdate()
         {
             ManageKick();
+            ManageDestroy();
         }
 
 
@@ -45,6 +47,11 @@ namespace Assets.Scripts
             _kickUp = true;
         }
 
+        public void Destroy()
+        {
+            _destroy = true;
+        }
+
         private void ManageKick()
         {
             if (_kick || _kickUp)
@@ -56,6 +63,20 @@ namespace Assets.Scripts
                 }
                 _kick = _kickUp = false;
             }
+        }
+
+        private void ManageDestroy()
+        {
+            if (_destroy)
+            {
+                if (_ballOnReach)
+                {
+                    Destroy(_ballOnReach);
+                    _ballOnReach = null;
+                }
+            }
+
+            _destroy = false;
         }
 
         void OnTriggerEnter2D(Collider2D collider)

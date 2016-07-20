@@ -41,6 +41,7 @@ namespace Assets.Scripts
         private bool _dash;
         private bool _build;
         public bool _up;
+        public bool _destroy;
 
         // States
         private bool _facingRight = true;
@@ -99,6 +100,9 @@ namespace Assets.Scripts
 
             if (Input.GetButtonDown(_control.Build))
                 _build = true;
+
+            if (Input.GetButtonDown(_control.Destroy))
+                _destroy = true;
 
             if (Input.GetAxis(_control.Vertical) > 0)
                 _up = true;
@@ -159,7 +163,13 @@ namespace Assets.Scripts
                 rb2.velocity = new Vector2(0, BUILD_FORCE);
             }
 
+            if (_destroy)
+            {
+                LegControl.Destroy();
+            }
+
             _build = false;
+            _destroy = false;
         }
 
         void Flip()

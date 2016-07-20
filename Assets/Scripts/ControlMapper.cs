@@ -13,6 +13,7 @@ namespace Assets.Scripts
         private const string FIRE = "Fire";
         private const string DASH = "Dash";
         private const string BUILD = "Build";
+        private const string DESTROY = "Destroy";
         private const string START = "Start";
 
         private int _player;
@@ -28,6 +29,7 @@ namespace Assets.Scripts
         public string Fire { get { return FIRE + _player; } }
         public string Dash { get { return DASH + _player; } }
         public string Build { get { return BUILD + _player; } }
+        public string Destroy { get { return DESTROY + _player; } }
         public string Start { get { return START + _player; } }
 
     }   
