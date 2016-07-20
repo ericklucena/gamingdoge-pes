@@ -43,6 +43,7 @@ namespace Assets.Scripts
                 {
                     GetComponent<GUIText>().text = "IT'S A DRAW!!!";
                 }
+
                 StartCoroutine(Reload());
             }
 
@@ -51,6 +52,7 @@ namespace Assets.Scripts
         IEnumerator Reload()
         {
             yield return new WaitForSeconds(5);
+            _control.Reset();
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.buildIndex);
             SceneManager.SetActiveScene(scene);

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts
 {
@@ -68,6 +70,12 @@ namespace Assets.Scripts
             {
                 _player2Score++;
             }
+        }
+
+        public void Reset()
+        {
+            _player1Score = _player2Score = 0;
+            _players = 0;
         }
 
         public static GameControl Instance
