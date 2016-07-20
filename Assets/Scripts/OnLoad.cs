@@ -8,8 +8,8 @@ namespace Assets.Scripts
         // Prefabs
         public GameObject Player;
 
-        private Vector3 BUILD_POSITION_LEFT = new Vector3(-3.478f, -4.328f);
-        private Vector3 BUILD_POSITION_RIGHT = new Vector3(5.111f, -4.328f);
+        private Vector3 BUILD_POSITION_LEFT = new Vector3(-5.0f, -1.628f);
+        private Vector3 BUILD_POSITION_RIGHT = new Vector3(5.0f, -1.628f);
 
 
         void Awake()
