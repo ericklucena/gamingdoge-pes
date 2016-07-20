@@ -22,7 +22,6 @@ namespace Assets.Scripts
             // Setting up the reference.
             GameObject[] playersGameObjects = GameObject.FindGameObjectsWithTag("Player");
             // Setting up the reference.
-            maxSize = 17.9f;
             players = Array.ConvertAll<GameObject, Transform>(playersGameObjects, x => x.transform);
 
         }
