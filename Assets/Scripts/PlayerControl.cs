@@ -21,8 +21,8 @@ namespace Assets.Scripts
         private Vector3 BuildPosition { get { return _facingRight ? BUILD_POSITION_RIGHT : BUILD_POSITION_LEFT; } }
 
         // Vectors
-        private Vector3 BUILD_POSITION_RIGHT = new Vector3(0.5f, -0.5f);
-        private Vector3 BUILD_POSITION_LEFT = new Vector3(-0.5f, -0.5f);
+        private Vector3 BUILD_POSITION_RIGHT = new Vector3(0.35f, -0.5f);
+        private Vector3 BUILD_POSITION_LEFT = new Vector3(-0.35f, -0.5f);
 
         // Forces
         private const float WALK_FORCE = 10f;
