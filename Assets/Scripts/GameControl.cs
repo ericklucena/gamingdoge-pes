@@ -10,12 +10,18 @@ namespace Assets.Scripts
     {
         private static GameControl _instance;
 
+        // Attributes
         private int _players;
         private int _player1Score;
         private int _player2Score;
 
+        // Constants
+        private const int _GAME_LENGTH = 120;
+
+
         public int Player1Score { get { return _player1Score; } }
         public int Player2Score { get { return _player2Score; } }
+        public int GameLength { get { return _GAME_LENGTH; } }
 
         // States
         public bool Running { get; private set; }
