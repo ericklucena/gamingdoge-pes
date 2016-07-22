@@ -13,7 +13,7 @@ namespace Assets.Scripts
 
         public void StartCamera()
         {
-            GameObject[] playersGameObjects = playersGameObjects = GameObject.FindGameObjectsWithTag("Player");
+            GameObject[] playersGameObjects = GameObject.FindGameObjectsWithTag("Player");
             players = Array.ConvertAll<GameObject, Transform>(playersGameObjects, x => x.transform);
         }
 

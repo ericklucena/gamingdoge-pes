@@ -10,7 +10,9 @@ namespace Assets.Scripts
 
         private Vector3 BUILD_POSITION_LEFT = new Vector3(-5.0f, -1.628f);
         private Vector3 BUILD_POSITION_RIGHT = new Vector3(5.0f, -1.628f);
-
+        private AudioSource _source;
+        public AudioClip shootSound;
+        private GameControl _control;
 
         void Awake()
         {
@@ -19,11 +21,21 @@ namespace Assets.Scripts
             Player2.GetComponent<PlayerControl>().Flip();
 
             transform.GetComponent<CameraFollow>().StartCamera();
+            _control = GameControl.Instance;
+            _source = GetComponent<AudioSource>();
+            //  float vol = Random.Range(0., volHighRange);
+            _source.Play();
+           
         }
+        void Update() {
+            if(_source.isPlaying) {
+                Time.timeScale = 0;
 
-        void Update()
-        {
+            } else if(Time.timeScale == 0 && _control.Running) {
+                Time.timeScale = 1;
+            }
 
+            
         }
     }
 }

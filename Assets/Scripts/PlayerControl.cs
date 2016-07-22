@@ -133,11 +133,11 @@ namespace Assets.Scripts
             float velocity = _dash ? _HORIZONTAL_DASH_VELOCITY : _HORIZONTAL_WALK_VELOCITY;
 
             if (_foward)
-                GetComponent<Rigidbody2D>().velocity = new Vector2(velocity, GetComponent<Rigidbody2D>().velocity.y);
+                rb2.velocity = new Vector2(velocity, rb2.velocity.y);
             else if (_backward)
-                GetComponent<Rigidbody2D>().velocity = new Vector2(-1 * velocity, GetComponent<Rigidbody2D>().velocity.y);
+                rb2.velocity = new Vector2(-1 * velocity, rb2.velocity.y);
             else if (Grounded)
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
+                rb2.velocity = new Vector2(0, rb2.velocity.y);
 
             _foward = _backward = false;
         }

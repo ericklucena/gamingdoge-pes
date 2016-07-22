@@ -18,7 +18,7 @@ namespace Assets.Scripts
         private int _player2Score;
 
         // Constants
-        private const int _GAME_LENGTH = 120;
+        private const int _GAME_LENGTH = 30;
 
 
         public int Player1Score { get { return _player1Score; } }
@@ -40,13 +40,13 @@ namespace Assets.Scripts
             return _players;
         }
 
-        private void Pause()
+        public void Pause()
         {
             Running = false;
             Time.timeScale = 0;
         }
 
-        private void Resume()
+        public void Resume()
         {
             Running = true;
             Time.timeScale = 1;

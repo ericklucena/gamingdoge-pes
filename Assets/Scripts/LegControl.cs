@@ -8,7 +8,7 @@ namespace Assets.Scripts
         private PlayerControl _player;
 
         private GameObject _ballOnReach;
-
+        public AudioClip kickSound;
         private const float _KICK_FORCE = 80f;
         private const float _KICK_UP_FORCE = 140f;
 
@@ -16,18 +16,15 @@ namespace Assets.Scripts
         private bool _kick;
         private bool _kickUp;
         private bool _destroy;
+        
+        private AudioSource source;
 
         // Use this for initialization
         void Start()
         {
             _player = transform.parent.GetComponent<PlayerControl>();
             _player.LegControl = this;
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            source = GetComponent<AudioSource>();
         }
 
         // Update is called once per frame
@@ -64,6 +61,7 @@ namespace Assets.Scripts
                 {
 
                     rb2.AddForce(new Vector2(0f, _KICK_UP_FORCE));
+                    source.PlayOneShot(kickSound);
                 }
                 else if (_kick)
                 {
@@ -72,7 +70,10 @@ namespace Assets.Scripts
                     float deltaY = Mathf.Abs(_player.KickPosition.y - _ballOnReach.transform.position.y);
                     rb2.velocity = new Vector2(rb2.velocity.x, 0f);
                     rb2.AddForce(new Vector2(_KICK_FORCE * _player.Direction * (deltaX * 2 / (deltaX + deltaY)), _KICK_FORCE * (deltaY * 2 / (deltaX + deltaY))));
+                    source.PlayOneShot(kickSound);
                 }
+
+                
 
             }
             _kick = _kickUp = false;

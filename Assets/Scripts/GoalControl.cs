@@ -5,28 +5,21 @@ namespace Assets.Scripts
     public class GoalControl : MonoBehaviour {
 
         public int scoresTo;
-
+        public AudioClip goalSound;
         private GameControl _control;
-
+        private AudioSource source;
         // Use this for initialization
         void Start() {
             _control = GameControl.Instance;
-        }
-
-        // Update is called once per frame
-        void Update() {
-
-        }
-
-        // Update is called once per frame
-        void FixedUpdate()
-        {
+            source = GetComponent<AudioSource>();
         }
 
         void OnTriggerEnter2D(Collider2D collider)
         {
             if (collider.tag == TagControl.Ball)
             {
+                source.PlayOneShot(goalSound);
+
                 _control.GoalScored(scoresTo);
                 Destroy(collider.gameObject, 2);
             }
