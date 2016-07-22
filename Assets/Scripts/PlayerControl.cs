@@ -11,6 +11,7 @@ namespace Assets.Scripts
         private ControlMapper _control;
 
         // Elements
+        internal HeadControl HeadControl { get; set; }
         internal LegControl LegControl { get; set; }
         internal FeetControl FeetControl { get; set; }
 
@@ -19,6 +20,7 @@ namespace Assets.Scripts
         public bool Grounded { get { return FeetControl.Grounded; } }
         public bool OnSpawnArea { get; set; }
         public Vector3 KickPosition { get { return transform.position + (_facingRight?_KICK_POSITION_RIGHT:_KICK_POSITION_LEFT); } }
+        public Vector3 HeadPosition { get { return transform.position + _HEAD_POSITION; } }
 
         // Private Properties
         private Vector3 _BuildPosition { get { return _facingRight ? _BUILD_POSITION_RIGHT : _BUILD_POSITION_LEFT; } }
@@ -28,6 +30,7 @@ namespace Assets.Scripts
         private Vector3 _BUILD_POSITION_LEFT = new Vector3(-0.35f, -0.5f);
         private Vector3 _KICK_POSITION_RIGHT = new Vector3(0.24f, -0.19f);
         private Vector3 _KICK_POSITION_LEFT = new Vector3(-0.24f, -0.19f);
+        private Vector3 _HEAD_POSITION = new Vector3(0f, 0.5f);
 
         // Forces
         private const float _WALK_FORCE = 10f;
@@ -54,6 +57,7 @@ namespace Assets.Scripts
 
         // Prefabs
         public GameObject Ball;
+        private bool _headButt;
 
         // Use this for initialization
         void Start()
@@ -73,6 +77,7 @@ namespace Assets.Scripts
             ManageHorizontalMovements();
             ManageVerticalMovements();
             ManageKickMovement();
+            ManageHeadButt();
             ManageBuildMovement();
         }
 
@@ -94,7 +99,7 @@ namespace Assets.Scripts
             }
 
             if (Input.GetButtonDown(_control.Fire))
-                _kick = true;
+                _kick = _headButt = true;
 
             if (Input.GetButtonDown(_control.Dash))
                 _dash = true;
@@ -170,6 +175,14 @@ namespace Assets.Scripts
             }
 
             _kick = _up = false;
+        }
+
+        private void ManageHeadButt() {
+            if (_headButt) 
+            {
+                HeadControl.HeadButt();
+            }
+            _headButt = false;
         }
 
         private void ManageBuildMovement()

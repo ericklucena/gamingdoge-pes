@@ -10,7 +10,7 @@ namespace Assets.Scripts
         private GameObject _ballOnReach;
 
         private const float _KICK_FORCE = 80f;
-        private const float _KICK_UP_FORCE = 70f;
+        private const float _KICK_UP_FORCE = 140f;
 
         // Commands
         private bool _kick;

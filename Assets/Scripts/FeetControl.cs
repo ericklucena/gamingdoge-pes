@@ -16,26 +16,15 @@ namespace Assets.Scripts
             _player.FeetControl = this;
         }
 
-        // Update is called once per frame
-        void Update() {
-
-        }
-
         void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collider.tag == TagControl.Ground)
-            {
-                _ground = collider.gameObject;
-            }
+            _ground = collider.gameObject;
         }
 
         void OnTriggerExit2D(Collider2D collider)
         {
-            if (collider.tag == TagControl.Ground)
-            {
-                if (_ground == collider.gameObject)
-                    _ground = null;
-            }
+            if (_ground == collider.gameObject)
+                _ground = null;
         }
     }
 }

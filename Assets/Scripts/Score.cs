@@ -17,8 +17,7 @@ namespace Assets.Scripts
 
         void Update()
         {
-            GetComponent<GUIText>().text = _control.Player1Score + " : " + _control.Player2Score;
-
+            GetComponent<GUIText>().text = String.Format("{0} \t\t\t\t {1}", _control.Player1Score, _control.Player2Score);
         }
     }
 }
