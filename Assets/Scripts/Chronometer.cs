@@ -13,11 +13,13 @@ namespace Assets.Scripts
         public float time;
 
         private GameControl _control;
-
-
+        private Animator fireWorkBlue;
+        private Animator fireWorkRed;
 
         void Awake()
         {
+            fireWorkBlue = GameObject.FindGameObjectWithTag("fireWorkBlue").GetComponent<Animator>();
+            fireWorkRed = GameObject.FindGameObjectWithTag("fireWorkPink").GetComponent<Animator>();
             _control = GameControl.Instance;
             time = _control.GameLength;
         }
@@ -28,16 +30,19 @@ namespace Assets.Scripts
             if (time >= 0)
             {
                 GetComponent<GUIText>().text = time.ToString("0");
+                
                 time -= Time.deltaTime;
             }
             else
             {
                 if (_control.Player1Score > _control.Player2Score)
                 {
+                    fireWorkRed.SetBool("Win", true);
                     GetComponent<GUIText>().text = "Player 1 WINS!!!";
                 }
                 else if (_control.Player2Score > _control.Player1Score)
                 {
+                    fireWorkBlue.SetBool("Win", true);
                     GetComponent<GUIText>().text = "Player 2 WINS!!!";
                 }
                 else

@@ -86,6 +86,7 @@ namespace Assets.Scripts
             {
                 if (_instance == null)
                     _instance = new GameControl();
+                _instance.chronometer = GameObject.FindGameObjectWithTag("Chronometer").GetComponent<Chronometer>(); ;
                 return _instance;
             }
         }
