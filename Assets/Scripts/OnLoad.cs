@@ -24,6 +24,7 @@ namespace Assets.Scripts
             _control = GameControl.Instance;
             _source = GetComponent<AudioSource>();
             //  float vol = Random.Range(0., volHighRange);
+            
             _source.Play();
            
         }
