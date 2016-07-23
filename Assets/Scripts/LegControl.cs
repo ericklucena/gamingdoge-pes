@@ -85,7 +85,8 @@ namespace Assets.Scripts
             {
                 if (_ballOnReach)
                 {
-                    Destroy(_ballOnReach);
+                    _ballOnReach.gameObject.GetComponent<Animator>().SetTrigger("destroy");
+                    Destroy(_ballOnReach, .45f);
                     _ballOnReach = null;
                 }
             }

@@ -5,7 +5,7 @@ namespace Assets.Scripts
     public class FeetControl : MonoBehaviour {
 
         private PlayerControl _player;
-
+        [SerializeField]
         private GameObject _ground;
 
         public bool Grounded { get { return _ground != null; } }
@@ -18,7 +18,13 @@ namespace Assets.Scripts
 
         void OnTriggerEnter2D(Collider2D collider)
         {
-            _ground = collider.gameObject;
+            if(!collider.isTrigger)
+                _ground = collider.gameObject;
+        }
+
+        void OnTriggerStay2D(Collider2D collider) {
+            if (!collider.isTrigger)
+                _ground = collider.gameObject;
         }
 
         void OnTriggerExit2D(Collider2D collider)

@@ -59,11 +59,15 @@ namespace Assets.Scripts
         public GameObject Ball;
         private bool _headButt;
 
+        private Animator _anim;
+
         // Use this for initialization
         void Start()
         {
             _playerNumber = GameControl.Instance.NewPlayer();
             _control = new ControlMapper(_playerNumber);
+            _anim = gameObject.GetComponent<Animator>();
+            _anim.SetInteger("Player", _playerNumber);
         }
 
         // Update is called once per frame
@@ -132,13 +136,23 @@ namespace Assets.Scripts
             Rigidbody2D rb2 = GetComponent<Rigidbody2D>();
             float velocity = _dash ? _HORIZONTAL_DASH_VELOCITY : _HORIZONTAL_WALK_VELOCITY;
 
-            if (_foward)
+            if (_foward) {
                 rb2.velocity = new Vector2(velocity, rb2.velocity.y);
-            else if (_backward)
-                rb2.velocity = new Vector2(-1 * velocity, rb2.velocity.y);
-            else if (Grounded)
-                rb2.velocity = new Vector2(0, rb2.velocity.y);
+                if(Grounded)
+                    _anim.SetBool("Running", true);
 
+            } else if (_backward) {
+                rb2.velocity = new Vector2(-1 * velocity, rb2.velocity.y);
+                if(Grounded)
+                    _anim.SetBool("Running", true);
+
+            } else if (Grounded) {
+                rb2.velocity = new Vector2(0, rb2.velocity.y);
+                _anim.SetBool("Running", false);
+
+            } else {
+                _anim.SetBool("Running", false);
+            }
             _foward = _backward = false;
         }
 
@@ -150,12 +164,17 @@ namespace Assets.Scripts
             {
                 rb2.AddForce(Vector2.up * _JUMP_FORCE);
                 _jumping = true;
+                _anim.SetBool("Jump", true);
             }
 
             if (!_jump && _jumping)
             {
                 rb2.velocity = new Vector2(rb2.velocity.x, rb2.velocity.y<0?rb2.velocity.y:0.5f);
                 _jumping = false;
+            }
+            if(rb2.velocity.y < 0)
+            {
+                _anim.SetBool("Jump", false);
             }
 
         }
@@ -164,6 +183,7 @@ namespace Assets.Scripts
         {
             if (_kick)
             {
+                _anim.SetTrigger("Attack");
                 if (_up)
                 {
                     LegControl.KickUp();

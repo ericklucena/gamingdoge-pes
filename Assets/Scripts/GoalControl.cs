@@ -21,7 +21,8 @@ namespace Assets.Scripts
                 source.PlayOneShot(goalSound);
 
                 _control.GoalScored(scoresTo);
-                Destroy(collider.gameObject, 2);
+                collider.gameObject.GetComponent<Animator>().SetTrigger("destroy");
+                Destroy(collider.gameObject, .45f);
             }
         }
     }
