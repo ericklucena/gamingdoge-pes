@@ -19,7 +19,7 @@ namespace Assets.Scripts
 
         // Constants
         private const int _GAME_LENGTH = 30;
-
+        private Chronometer chronometer;
 
         public int Player1Score { get { return _player1Score; } }
         public int Player2Score { get { return _player2Score; } }
@@ -32,6 +32,7 @@ namespace Assets.Scripts
         {
             _players = 0;
             Running = true;
+            chronometer = GameObject.FindGameObjectWithTag("Chronometer").GetComponent<Chronometer>();
         }
 
         public int NewPlayer()
@@ -62,6 +63,7 @@ namespace Assets.Scripts
 
         public void GoalScored(int player)
         {
+            if (chronometer.time < 0) return;
             if (player == 1)
             {
                 _player1Score++;

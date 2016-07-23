@@ -13,7 +13,7 @@ namespace Assets.Scripts
         private AudioSource _source;
         public AudioClip shootSound;
         private GameControl _control;
-
+        private bool _started;
         void Awake()
         {
             Instantiate(Player, BUILD_POSITION_LEFT, Quaternion.Euler(Vector3.zero));
@@ -24,19 +24,22 @@ namespace Assets.Scripts
             _control = GameControl.Instance;
             _source = GetComponent<AudioSource>();
             //  float vol = Random.Range(0., volHighRange);
-            
+            _started = false;
             _source.Play();
            
         }
         void Update() {
-            if(_source.isPlaying) {
+            if(_source.isPlaying && !_started) {
                 Time.timeScale = 0;
 
             } else if(Time.timeScale == 0 && _control.Running) {
+                _started = true;
                 Time.timeScale = 1;
+                _source.PlayOneShot(shootSound);
+
             }
 
-            
+
         }
     }
 }

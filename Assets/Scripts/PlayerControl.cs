@@ -60,6 +60,9 @@ namespace Assets.Scripts
         private bool _headButt;
 
         private Animator _anim;
+        private AudioSource _source;
+        [SerializeField]
+        private AudioClip audio;
 
         // Use this for initialization
         void Start()
@@ -68,6 +71,7 @@ namespace Assets.Scripts
             _control = new ControlMapper(_playerNumber);
             _anim = gameObject.GetComponent<Animator>();
             _anim.SetInteger("Player", _playerNumber);
+            _source = GetComponent<AudioSource>();
         }
 
         // Update is called once per frame
@@ -158,6 +162,7 @@ namespace Assets.Scripts
 
         private void ManageVerticalMovements()
         {
+            _anim.SetBool("Ground", Grounded);
             Rigidbody2D rb2 = GetComponent<Rigidbody2D>();
 
             if (_jump && Grounded && !_jumping)
@@ -209,6 +214,7 @@ namespace Assets.Scripts
         {
             if (_build && OnSpawnArea)
             {
+                _anim.SetTrigger("Attack");
                 GameObject ballInstance = Instantiate(Ball, transform.position + _BuildPosition, Quaternion.Euler(Vector3.zero)) as GameObject;
                 Rigidbody2D rb2 = Getter.GetRigibody2D(ballInstance);
                 rb2.velocity = new Vector2(0, _BUILD_FORCE);
@@ -216,6 +222,8 @@ namespace Assets.Scripts
 
             if (_destroy)
             {
+                _source.PlayOneShot(audio);
+                _anim.SetTrigger("Attack");
                 LegControl.Destroy();
             }
 

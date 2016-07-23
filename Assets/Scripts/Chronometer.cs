@@ -10,24 +10,25 @@ namespace Assets.Scripts
 {
     public class Chronometer : MonoBehaviour
     {
-        private float _time;
+        public float time;
 
         private GameControl _control;
+
 
 
         void Awake()
         {
             _control = GameControl.Instance;
-            _time = _control.GameLength;
+            time = _control.GameLength;
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (_time >= 0)
+            if (time >= 0)
             {
-                GetComponent<GUIText>().text = _time.ToString("0");
-                _time -= Time.deltaTime;
+                GetComponent<GUIText>().text = time.ToString("0");
+                time -= Time.deltaTime;
             }
             else
             {
