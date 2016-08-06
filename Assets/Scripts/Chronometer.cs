@@ -11,6 +11,7 @@ namespace Assets.Scripts
     public class Chronometer : MonoBehaviour
     {
         public float time;
+        public float endTime = 0;
 
         private GameControl _control;
         private Animator fireWorkBlue;
@@ -50,7 +51,14 @@ namespace Assets.Scripts
                     GetComponent<GUIText>().text = "IT'S A DRAW!!!";
                 }
 
-                StartCoroutine(Reload());
+                endTime += Time.deltaTime;
+
+                if (endTime > 5) {
+                    _control.Reset();
+                    SceneManager.LoadScene("PressStart");
+                }
+
+                //StartCoroutine(Reload());
             }
 
         }
@@ -58,10 +66,11 @@ namespace Assets.Scripts
         IEnumerator Reload()
         {
             yield return new WaitForSeconds(5);
-            _control.Reset();
+            /*
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.buildIndex);
-            SceneManager.SetActiveScene(scene);
+            SceneManager.SetActiveScene("Press Start");*/
+            SceneManager.LoadScene("PressStart");
         }
     }
 }

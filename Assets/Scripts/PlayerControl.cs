@@ -67,6 +67,7 @@ namespace Assets.Scripts
         // Use this for initialization
         void Start()
         {
+            
             _playerNumber = GameControl.Instance.NewPlayer();
             _control = new ControlMapper(_playerNumber);
             _anim = gameObject.GetComponent<Animator>();
@@ -93,13 +94,13 @@ namespace Assets.Scripts
         {
             float h = Input.GetAxis(_control.Horizontal);
 
-            if (h > 0)
+            if (h > 0.1)
             {
                 _foward = true;
                 if (!_facingRight)
                     Flip();
             }
-            else if (h < 0)
+            else if (h < -0.1)
             {
                 _backward = true;
                 if (_facingRight)
@@ -125,7 +126,7 @@ namespace Assets.Scripts
             if (Input.GetButtonDown(_control.Destroy))
                 _destroy = true;
 
-            if (Input.GetAxis(_control.Vertical) > 0)
+            if (Input.GetAxis(_control.Vertical) < -0.1)
                 _up = true;
             else
                 _up = false;
